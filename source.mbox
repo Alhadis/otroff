@@ -1,0 +1,609 @@
+Relay-Version: version B 2.10 5/3/83; site utzoo.UUCP
+Path: utzoo!mnetor!uunet!seismo!rutgers!ames!elroy!jplgodo!wlbr!scgvaxd!trwrb!simpson
+From: simpson@trwrb.UUCP (Scott Simpson)
+Newsgroups: comp.text
+Subject: Re: C/A/T Phototypesetter command set
+Message-ID: <2272@trwrb.UUCP>
+Date: Thu, 30-Jul-87 12:45:17 EDT
+Article-I.D.: trwrb.2272
+Posted: Thu Jul 30 12:45:17 1987
+Date-Received: Sat, 1-Aug-87 15:05:20 EDT
+References: <461@pluto.UUCP>
+Reply-To: simpson@trwrb.UUCP (Scott Simpson)
+Organization: TRW EDS, Redondo Beach, CA
+Lines: 593
+Keywords: C/A/T, phototypesetting
+
+Warren Burnstein writes:
+> I had the idea that I might be able to do some useful things
+> with the output of (old) troff if I know what the command set
+> of the phototypesetter looks like.  Does anyone know this
+> information, or have any programs that they are at liberty
+> to let me see that deal directly with the typesetter that
+> might shed some light on the subject?
+
+This is a commonly asked question so here is a manual page and include 
+file for the C/A/T.  You should be able to write a driver from this
+documentation.
+
+#! /bin/sh
+# To extract, remove mail header lines and type "sh filename"
+echo x - cat.h
+sed -e 's/^X//' > cat.h << '!FaR!OuT!'
+X/* mask for high order 4 bits of byte */
+X#define CAT_HIGH_NIBBLE 0xf0
+X#define CAT_MAX_BYTE 0xff
+X
+X#define CAT_ESCAPE_CODE 0x80
+X#define CAT_ESCAPE_MASK 0x7f
+X#define CAT_MAX_ESCAPE 0x7f
+X/* nonzero if escape command and zero otherwise */
+X#define CAT_IS_ESCAPE(x) (((x) & (CAT_HIGH_NIBBLE << 3)) == CAT_ESCAPE_CODE)
+X/* magnitude of escape */
+X#define CAT_ESCAPE(x) (~(x) & CAT_ESCAPE_MASK)
+X#define CAT_ENCODE_ESCAPE(n) (CAT_ESCAPE_CODE | (~(n) & CAT_ESCAPE_MASK))
+X
+X#define CAT_LEAD_CODE 0x60
+X#define CAT_LEAD_MASK 0x1f
+X#define CAT_MAX_LEAD 0x1f
+X/* nonzero if leading command and zero otherwise */
+X#define CAT_IS_LEADING(x) (((x) & (CAT_HIGH_NIBBLE << 1)) == CAT_LEAD_CODE)
+X/* magnitude of leading */
+X#define CAT_LEAD(x) (~(x) & CAT_MAX_LEAD)
+X#define CAT_ENCODE_LEAD(n) (CAT_LEAD_CODE | (~(n) & CAT_LEAD_MASK))
+X
+X#define CAT_SIZE_CHANGE_CODE 0x50
+X/* nonzero if point size change command and zero otherwise */
+X#define CAT_IS_SIZE_CHANGE(x) (((x) & CAT_HIGH_NIBBLE) == CAT_SIZE_CHANGE_CODE)
+X
+X/* translates from the weird CAT point size change codes into something sane */
+X#define CAT_SIZE_CHANGE(x) \
+X	((x) == 0x50 ? 7 : \
+X	 (x) == 0x51 ? 8 : \
+X	 (x) == 0x52 ? 10 : \
+X	 (x) == 0x53 ? 11 : \
+X	 (x) == 0x54 ? 12 : \
+X	 (x) == 0x55 ? 14 : \
+X	 (x) == 0x56 ? 18 : \
+X	 (x) == 0x57 ? 9 : \
+X	 (x) == 0x58 ? 6 : \
+X	 (x) == 0x59 ? 16 : \
+X	 (x) == 0x5a ? 20 : \
+X	 (x) == 0x5b ? 22 : \
+X	 (x) == 0x5c ? 24 : \
+X	 (x) == 0x5d ? 28 : \
+X	 (x) == 0x5e ? 36 : 0)
+X
+X/* translates from sane point sizes into the weird CAT encodings */
+X#define CAT_ENCODE_SIZE(x) \
+X	((x) == 6 ? 0x58 : \
+X	 (x) == 7 ? 0x50 : \
+X	 (x) == 8 ? 0x51 : \
+X	 (x) == 9 ? 0x57 : \
+X	 (x) == 10 ? 0x52 : \
+X	 (x) == 11 ? 0x53 : \
+X	 (x) == 12 ? 0x54 : \
+X	 (x) == 14 ? 0x55 : \
+X	 (x) == 16 ? 0x59 : \
+X	 (x) == 18 ? 0x56 : \
+X	 (x) == 20 ? 0x5a : \
+X	 (x) == 22 ? 0x5b : \
+X	 (x) == 24 ? 0x5c : \
+X	 (x) == 28 ? 0x5d : \
+X	 (x) == 36 ? 0x5e : 0)
+X
+X#define CAT_FLASH_CODE 0x00
+X#define CAT_FLASH_MASK 0x3f
+X#define CAT_MAX_FLASH 0x3f
+X/* nonzero if printable character and zero otherwise */
+X#define CAT_IS_FLASH(x) (((x) & (CAT_HIGH_NIBBLE << 2)) == CAT_FLASH_CODE)
+X#define CAT_FLASH(x) ((x) & CAT_MAX_FLASH)
+X#define CAT_ENCODE_FLASH(n) (CAT_FLASH_CODE | ((n) & CAT_FLASH_MASK))
+X
+X#define CAT_CONTROL_CODE 0x40
+X/* nonzero if control command and zero otherwise */
+X#define CAT_IS_CONTROL(x) (((x) & CAT_HIGH_NIBBLE) == CAT_CONTROL_CODE)
+X
+X/* CAT-8 control commands */
+X#define CAT_INITIALIZE 0x40
+X#define CAT_LOWER_RAIL 0x41
+X#define CAT_UPPER_RAIL 0x42
+X#define CAT_UPPER_MAGAZINE 0x43
+X#define CAT_LOWER_MAGAZINE 0x44
+X#define CAT_LOWER_FONT 0x45
+X#define CAT_UPPER_FONT 0x46
+X#define CAT_ESCAPE_FORWARD 0x47
+X#define CAT_ESCAPE_BACKWARD 0x48
+X#define CAT_STOP 0x49
+X#define CAT_LEAD_FORWARD 0x4a
+X#define CAT_LEAD_BACKWARD 0x4c
+X#define CAT_TILT_UP 0x4e
+X#define CAT_TILT_DOWN 0x4f
+X#define CAT_NOOP 0x00
+X/* trapdoor for CAT extensions */
+X#define CAT_EXTENSION 0x4b
+X
+X/* CAT_BIG_LEAD means take the next byte * 64 to obtain leading */
+X#define CAT_BIG_LEAD 0x01
+X#define CAT_BIG_LEAD_MULTIPLIER 64
+X#define CAT_MIN_BIG_LEAD (CAT_BIG_LEAD_MULTIPLIER * 0x01)
+X#define CAT_MAX_BIG_LEAD (CAT_BIG_LEAD_MULTIPLIER * 0xff)
+X
+X/* CAT_BIG_ESCAPE means take the next byte * 128 to obtain escape */
+X#define CAT_BIG_ESCAPE 0x02
+X#define CAT_BIG_ESCAPE_MULTIPLIER 128
+X#define CAT_MIN_BIG_ESCAPE (CAT_BIG_ESCAPE_MULTIPLIER * 0x01)
+X#define CAT_MAX_BIG_ESCAPE (CAT_BIG_ESCAPE_MULTIPLIER * 0xff)
+X
+X/*
+X * CAT_FORMFEED means advance to next page resetting current row
+X * and column to <0,0>.
+X */
+X#define CAT_FORMFEED 0x03
+X
+X/*
+X * Returns nonzero if a single point size and zero otherwise.
+X * The parameter is the `sane' point size and NOT the weird CAT encoding.
+X */
+X#define CAT_IS_SINGLE(p) ((6 <= (p) && (p) <= 14) || (p) == 18)
+X
+X/*
+X * Returns nonzero is a double point size and zero otherwise.
+X * The parmeter is the `sane' point size and NOT the weird CAT encoding.
+X */
+X#define CAT_IS_DOUBLE(p) ((p) == 16 || (p) >= 20)
+X
+X/*
+X * Returns nonzero if the old to new point size transition is a
+X * single to double transition and zero otherwise.
+X * The parameters are the `sane' point sizes NOT the weird CAT encodings.
+X */
+X#define CAT_IS_SINGLE_TO_DOUBLE(old, new) \
+X	(CAT_IS_SINGLE(old) && CAT_IS_DOUBLE(new))
+X
+X/*
+X * Returns nonzero if the old to new point size transition is a
+X * double to single transition and zero otherwise.
+X * The parameters are the `sane' point sizes NOT the weird CAT encodings.
+X */
+X#define CAT_IS_DOUBLE_TO_SINGLE(old, new) \
+X	(CAT_IS_DOUBLE(old) && CAT_IS_SINGLE(new))
+X
+Xtypedef struct CAT {
+X	char escape_where;	/* BACKWARD or FORWARD */
+X	char lead_where;	/* BACKWARD or FORWARD */
+X	char font;		/* bit 0 => tilt, bit 1 => rail, bit 2 => magazine */
+X	char font_half;		/* LOWER or UPPER */
+X	char point_size;	/* current point size */
+X} CAT;
+X
+X#define CAT_FORWARD 0
+X#define CAT_BACKWARD 1
+X#define CAT_UPPER 0
+X#define CAT_LOWER 1
+X
+X/* vertical resolution per inch */
+X#define CAT_VERTICAL_UNITS 144.0
+X/* horizontal resolution per inch */
+X#define CAT_HORIZONTAL_UNITS 432.0
+X
+X/* compensatory escape for single/double point size transitions */
+X#define CAT_LENSE_COMPENSATION 55
+X
+X#define CAT_TILT 01
+X#define CAT_RAIL 02
+X#define CAT_MAGAZINE 04
+X
+X/* default troff and scribe font mountings for CAT-8 */
+X#define CAT_ROMAN_FONT 0
+X#define CAT_ITALIC_FONT 2
+X#define CAT_BOLD_FONT 4
+X#define CAT_SPECIAL_FONT 6
+X
+X/* the maximum number of characters on a filmstrip */
+X#define CAT_MAX_FONT_INDEX 108
+!FaR!OuT!
+echo x - cat.5
+sed -e 's/^X//' > cat.5 << '!FaR!OuT!'
+X.TH CAT 5 TRW
+X.UC 4
+X.SH NAME
+Xcat \- GSI CAT-4/8 phototypesetter code
+X.SH SYNOPSIS
+X.B "#include <local/cat.h>"
+X.SH DESCRIPTION
+XThe Graphic Systems Industries CAT phototypesetter is driven by sending it a
+Xsequence of one-byte codes
+Xwhich specify characters, fonts, sizes, and other control information.
+X.PP
+XThe CAT's basic unit of length is 1/432 of an inch (6 units to a
+Xtypesetter's ``point'').
+XThe quantum of horizontal motion is one unit.
+XThe quantum of vertical motion is three units (1/144 of an inch, 1/2 point).
+X.PP
+XThe top two bits of the code classify it as one of three major
+Xtypes:
+Xan 
+X.I escape
+Xcode (top bit 1),
+Xa 
+X.I flash
+Xcode (top bits 00),
+Xor a control code (top bits 01).
+XA code of all zeros is ignored;  a code of all ones is illegal.
+X.PP
+XA flash code specifies flashing one of 63 characters, as given by the
+Xremaining six bits.
+XSince this is not enough to specify all possible characters, or even
+Xall characters in a single font \- there are 108 per font \-
+Xvarious control codes (described later) select a font and either
+Xthe
+X.I lower
+Xor
+X.I upper
+Xhalf of the font.
+XThe lower half is the first 63 characters of the font;
+Xthe upper half is the remaining 45.
+XA flash code of 46 or higher in the upper half is illegal.
+X.PP
+XAn escape code specifies horizontal motion.
+XThe size of the motion, in horizontal quanta, is the one's-complement
+Xof the low seven bits of the code.
+XThe direction of the motion is set by control codes.
+XHitting the right or left margin limit switch is illegal and will
+Xcause the machine to stop.
+XThe machine starts out, after initialization, hard against the left
+Xmargin limit switch;  an initial escape of 16 units
+X.I must
+Xbe given before starting work, and the position after this motion
+Xshould be the limit of all future leftward motions.
+XFrom this point, the distance to the right margin limit switch
+Xis about 7.5 inches.
+X.PP
+XA code with the top three bits 011 is a
+X.I lead
+Xcode,
+Xspecifying vertical motion.
+XThe remaining five bits are the one's-complement of the size of
+Xthe motion, in vertical quanta.
+XThe direction of motion is set by control codes.
+XThe amount of vertical motion is, in principle, limited only by
+Xrunning off the paper in the upward direction and by the limited
+Xcapacity of the output cartridge in the downward direction.
+X.PP
+XA code with the top four bits 0101 is a size-change code, which
+Xspecifies movement of the lens turret and the doubler lens to
+Xchange point size.
+XThese codes are as follows:
+X.PP
+X.RS
+X.nf
+X.ta 2c
+XSize	Code
+X
+X6	0101\|1000
+X7	0101\|0000
+X8	0101\|0001
+X9	0101\|0111
+X10	0101\|0010
+X11	0101\|0011
+X12	0101\|0100
+X14	0101\|0101
+X16	0101\|1001
+X18	0101\|0110
+X20	0101\|1010
+X22	0101\|1011
+X24	0101\|1100
+X28	0101\|1101
+X36	0101\|1110
+X.DT
+X.fi
+X.RE
+X.PP
+XSize changes involving the doubler lens alter the horizontal position.
+XChanges from single to double sizes should be followed by a forward
+Xescape of 55 quanta;  changes from double to single sizes should be
+Xfollowed by a reverse escape of 55 quanta.
+XThe single sizes are 6, 7, 8, 9, 10, 11, 12, 14, and 18;
+Xthe double sizes are 16, 20, 22, 24, 28, and 36.
+X.PP
+XThe control codes with the top four bits 0100 specify miscellaneous
+Xcontrol codes, not all of which have valid meanings.
+XThey are:
+X.PP
+X.RS
+X.ta 6c
+X.nf
+Xinitialize	0100\|0000
+Xstop	0100\|1001
+Xupper rail	0100\|0010
+Xlower rail	0100\|0001
+Xupper magazine	0100\|0011
+Xlower magazine	0100\|0100
+Xtilt up	0100\|1110
+Xtilt down	0100\|1111
+Xupper font half	0100\|0110
+Xlower font half	0100\|0101
+Xescape forward	0100\|0111
+Xescape backward	0100\|1000
+Xlead forward	0100\|1010
+Xlead backward	0100\|1100
+X.fi
+X.DT
+X.RE
+X.PP
+XThe
+X.I initialize
+Xcode causes leftward motion to the left margin limit
+Xswitch,
+Xand sets the following modes:
+Xescape forward, lead forward, lower font half,
+Xlower rail, lower mag, tilt down.
+XNote that the left margin limit switch does not define a precise
+Xposition, and hence reinitializing the machine
+Xwill destroy precise left-margin alignment.
+X.PP
+XThe
+X.I stop
+Xcode stops the machine, which must be manually
+Xrestarted (normally after changing output cartridges);
+Xthis code should be used only at the end of a run.
+X.PP
+XFonts are selected by the combination of
+X.IR rail ,
+X.IR magazine ,
+Xand
+X.IR tilt .
+XThe tilt codes do not exist on the 4-font CAT;  this is the only user-visible
+Xdifference between the 4-font and 8-font machines.
+XThe correspondence between rail/magazine/tilt and font number is as follows:
+X.PP
+X.RS
+X.nf
+X.ta 2c 5c 7c 9c
+Xrail	magazine	tilt	4 font	8 font
+X
+Xlower	lower	up	1	1
+Xlower	lower	down	1	2
+Xupper	lower	up	2	3
+Xupper	lower	down	2	4
+Xlower	upper	up	3	5
+Xlower	upper	down	3	6
+Xupper	upper	up	4	7
+Xupper	upper	down	4	8
+X.DT
+X.fi
+X.RE
+X.PP
+XSeveral additional commands were introduced locally to ease
+Xthe simulation of the CAT on a variety of raster plotters.
+XEach is several bytes long.
+XThe first byte is the
+X.I extension
+Xcontrol code 0100\|1011.
+XThe remaining bytes specify the command and its argument
+X(if any, treated as an unsigned integer).
+XThe commands are:
+X.PP
+X.RS
+X.nf
+X.ta 6c
+Xbig lead	0000\|0001
+Xbig escape	0000\|0010
+Xformfeed	0000\|0011
+X.fi
+X.DT
+X.RE
+X.PP
+XThe
+X.I "big lead"
+Xcode specifies vertical motion whose magnitude is
+X64 * the following byte.
+XThe
+X.I "big escape"
+Xcode specifies horizontal motion whose magnitude is
+X128 * the following byte.
+XThe
+X.I formfeed
+Xcode specifies an advance to the next page resetting the current
+Xrow and column to <0,0>.
+X.PP
+XA complete CAT file should begin with an 
+X.I initialize
+Xcode followed
+Xby an
+X.IR escape -16
+Xcode,
+Xand should end with 14 inches of trailer and a
+X.I stop
+Xcode.
+X.SH  HEADER FILE
+XIn the following description of
+X.I cat.h
+X.I b
+Xdenotes an arbitrary byte treated as an unsigned integer,
+X.I c
+Xdenotes a CAT code and
+X.IR i " or " j
+Xdenotes a small positive integer.
+X.TP
+XCAT_IS_CONTROL(c)
+Xreturns nonzero if
+X.I c
+Xis a control code and zero otherwise.
+X.TP
+XCAT_IS_DOUBLE(i)
+Xreturns nonzero if
+X.I i
+Xis a double point size and zero otherwise.
+X.TP
+XCAT_IS_DOUBLE_TO_SINGLE(i,j)
+Xreturns nonzero if and only if
+X.I i
+Xis a double point size and
+X.I j
+Xis a single point size.
+X.TP
+XCAT_IS_ESCAPE(c)
+Xreturns nonzero if
+X.I c
+Xis an escape code and zero otherwise.
+X.TP
+XCAT_IS_FLASH(c)
+Xreturns nonzero if
+X.I c
+Xis a flash code and zero otherwise.
+X.TP
+XCAT_IS_LEADING(c)
+Xreturns nonzero if
+X.I c
+Xis a leading code and zero otherwise.
+X.TP
+XCAT_IS_SINGLE(i)
+Xreturns nonzero if
+X.I i
+Xis a single point size and zero otherwise.
+X.TP
+XCAT_IS_SINGLE_TO_DOUBLE(i,j)
+Xreturns nonzero if and only if
+X.I i
+Xis a single point size and
+X.I j
+Xis a double point size.
+X.TP
+XCAT_IS_SIZE_CHANGE(c)
+Xreturns nonzero if
+X.I c
+Xis a size change code and zero otherwise.
+X.TP
+XCAT_ESCAPE(c)
+Xreturns the magnitude of the escape code
+X.IR c .
+X.TP
+XCAT_LEAD(c)
+Xreturns the magnitude of the lead code
+X.IR c .
+X.TP
+XCAT_SIZE_CHANGE(c)
+Xextracts the size change from the point size code
+X.I c
+Xtranslating the CAT encoding to the corresponding integer value.
+X.TP
+XCAT_ENCODE_ESCAPE(i)
+Xretuns an escape code with magnitude
+X.IR i .
+X.TP
+XCAT_ENCODE_LEAD(i)
+Xreturns a lead code with magnitude
+X.IR i .
+X.TP
+XCAT_ENCODE_SIZE(i)
+Xreturns a point size change code for size
+X.IR i .
+X.TP
+XCAT_ENCODE_FLASH(i)
+Xreturns a flash code with font index
+X.IR i .
+X.TP
+XCAT_HORIZONTAL_UNITS
+Xthe horizontal resolution per inch of the CAT-4/8 as a floating
+Xpoint number.
+X.TP
+XCAT_LENSE_COMPENSATION
+Xthe amount of compensatory escape for single/double
+Xpoint size transitions.
+X.TP
+XCAT_MAX_FONT_INDEX
+Xthe maximum number of glyphs on a CAT-4/8 filmstrip.
+X.TP
+XCAT_VERTICAL_UNITS
+Xthe vertical resolution per inch of the CAT-4/8 as a floating
+Xpoint number.
+X.PP
+XThe constants:
+X.nf
+X
+X	CAT_BIG_ESCAPE
+X	CAT_BIG_LEAD
+X	CAT_ESCAPE_BACKWARD
+X	CAT_ESCAPE_FORWARD
+X	CAT_EXTENSION
+X	CAT_FORMFEED
+X	CAT_INITIALIZE
+X	CAT_LEAD_BACKWARD
+X	CAT_LEAD_FORWARD
+X	CAT_LOWER_FONT
+X	CAT_LOWER_MAGAZINE
+X	CAT_LOWER_RAIL
+X	CAT_NOOP
+X	CAT_STOP
+X	CAT_TILT_DOWN
+X	CAT_TILT_UP
+X	CAT_UPPER_FONT
+X	CAT_UPPER_RAIL
+X	CAT_UPPER_MAGAZINE
+X
+X.fi
+Xare provided as mnemonics for the CAT-4/8 control codes.
+X.PP
+XThe structure:
+X.nf
+X.ta \w'typedef 'u +\w'char escape_where;  'u
+X
+Xtypedef struct CAT {
+X	char escape_where;	/* BACKWARD or FORWARD */
+X	char lead_where;	/* BACKWARD or FORWARD */
+X	char font;		/* bit 0 => tilt, bit 1 => rail, bit 2 => magazine */
+X	char font_half;		/* LOWER or UPPER */
+X	char point_size;	/* current point size */
+X} CAT;
+X
+X.DT
+X.fi
+Xis used to represent the CAT internal state.
+X.PP
+XThe constants:
+X.nf
+X
+X	CAT_BACKWARD
+X	CAT_FORWARD
+X	CAT_LOWER
+X	CAT_MAGAZINE
+X	CAT_RAIL
+X	CAT_TILT
+X	CAT_UPPER
+X
+X.fi
+Xare provided as aids for setting and testing components of the state.
+X.PP
+XThe constants:
+X.nf
+X
+X	CAT_ROMAN_FONT
+X	CAT_ITALIC_FONT
+X	CAT_BOLD_FONT
+X	CAT_SPECIAL_FONT
+X
+X.fi
+Xare the font positions assummed by
+X.IR scribe (1)
+Xfor the CAT-8.
+XThey are upward compatible with the default font postions
+Xassummed by
+X.IR troff (1)
+Xfor the CAT-4.
+X.SH AUTHORS
+XHenry Spencer, University of Toronto
+X.br
+XMichael Gorlick, TRW
+X.SH BUGS
+XThe documentation and the hardware disagree on the initial tilt setting;
+Xthe above describes the hardware.
+X.SH SEE ALSO
+Xcati(1)
+!FaR!OuT!
+exit
+-- 
+		Scott Simpson
+		TRW Space and Defense Sector
+		...{decvax,ihnp4,ucbvax}!trwrb!simpson
