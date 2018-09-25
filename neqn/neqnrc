@@ -1,0 +1,4 @@
+yacc ne.g
+cc -O -n -s ne*.c   
+rm -f *.o y.tab.c
+echo "done"
