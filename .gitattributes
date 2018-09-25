@@ -1,0 +1,11 @@
+eqn.d/eqnchar                  linguist-language=Roff
+macros.d/tmac.*                linguist-language=Roff
+macros.d/*.src                 linguist-language=Roff
+macros.d/macrunch              linguist-language=Shell
+macros.d/revisions             linguist-language=Text
+roff.d/def.??.names            linguist-language=C
+roff.d/*.hd                    linguist-language=C
+roff.d/terms.d/*.hd            linguist-language=C
+roff.d/terms.d/code.300        linguist-language=C
+roff.d/terms.d/code.lp         linguist-language=C
+roff.d/terms.d/mterms.c.UniSo  linguist-language=C
