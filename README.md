@@ -12,4 +12,10 @@ or GitHub-specific purposes. Everything in the immediate subdirectories
 has been left untouched from their extraction. The file timestamps date
 are back to October 25th, 1978.
 
+Building
+--------
+If you're actually able to compile and run a codebase this ancient, for
+God's sake, [please send a pull-request][2].
+
 [1]: https://web.archive.org/web/20060823034049/http://www.tuhs.org/Archive/PDP-11/Distributions/usdl/bostic_pwb.tar.gz
+[2]: https://github.com/Alhadis/otroff/pulls
