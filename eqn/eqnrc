@@ -1,0 +1,3 @@
+yacc e.g
+cc -O -n -s e*.c -ly  -lS
+echo "done eqn"

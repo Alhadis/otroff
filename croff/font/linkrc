@@ -1,0 +1,7 @@
+chdir /usr/lib/font
+rm H HI HM FD CI
+ln G H
+ln GI HI
+ln GM HM
+ln UD FD
+ln CK CI
