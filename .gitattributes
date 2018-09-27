@@ -1,0 +1,6 @@
+# Tell GitHub Linguist what language these files are
+croff/bothrc linguist-language=Shell
+croff/?rc    linguist-language=Shell
+croff/sufrc  linguist-language=Shell
+eqn/eqnrc    linguist-language=Shell
+eqn/e.g      linguist-language=Lex
