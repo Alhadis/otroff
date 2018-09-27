@@ -4,4 +4,5 @@ croff/nrc           linguist-language=Shell
 croff/suftab        linguist-language=Shell
 croff/term/termrc   linguist-language=Shell
 croff/term/code.300 linguist-language=C
+neqn/ne.g           linguist-language=Lex
 neqn/neqnrc         linguist-language=Shell
