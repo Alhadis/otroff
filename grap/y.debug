@@ -1,0 +1,451 @@
+#ifdef YYDEBUG
+char *yytoknames[] = {
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0," (",
+" )",
+" *",
+" +",
+0," -",
+0," /",
+0,0,0,0,0,0,0,0,0,0,0,0,0," =",
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"FRAME",
+"TICKS",
+"GRID",
+"LABEL",
+"COORD",
+"LINE",
+"ARROW",
+"CIRCLE",
+"DRAW",
+"NEW",
+"PLOT",
+"PIC",
+"NEXT",
+"COPY",
+"THRU",
+"UNTIL",
+"FOR",
+"FROM",
+"TO",
+"BY",
+"AT",
+"WITH",
+"IF",
+"GRAPH",
+"THEN",
+"ELSE",
+"DOSTR",
+"DOT",
+"DASH",
+"INVIS",
+"SOLID",
+"TEXT",
+"JUST",
+"SIZE",
+"LOG",
+"EXP",
+"SIN",
+"COS",
+"ATAN2",
+"SQRT",
+"RAND",
+"MAX",
+"MIN",
+"INT",
+"PRINT",
+"SPRINTF",
+"X",
+"Y",
+"SIDE",
+"IN",
+"OUT",
+"OFF",
+"UP",
+"DOWN",
+"ACROSS",
+"HEIGHT",
+"WIDTH",
+"RADIUS",
+"NUMBER",
+"NAME",
+"VARNAME",
+"DEFNAME",
+"STRING",
+"ST",
+"OR",
+"AND",
+"GT",
+"LT",
+"LE",
+"GE",
+"EQ",
+"NE",
+"UMINUS",
+"NOT",
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,};
+char *yystates[] = {
+"$accept : .top $end \ntop : .    (2)\nstat : .    (29)\n", /*0*/
+"$accept :  top.$end \n", /*1*/
+"", /*2*/
+"", /*3*/
+"", /*4*/
+"graphseq :  graph.statlist \nstat : .    (29)\n", /*5*/
+"", /*6*/
+"statlist :  stat.ST \n", /*7*/
+"", /*8*/
+"", /*9*/
+"", /*10*/
+"", /*11*/
+"", /*12*/
+"", /*13*/
+"", /*14*/
+"", /*15*/
+"", /*16*/
+"", /*17*/
+"", /*18*/
+"", /*19*/
+"", /*20*/
+"", /*21*/
+"", /*22*/
+"", /*23*/
+"", /*24*/
+"stat :  PRINT.expr \nstat :  PRINT.STRING \n", /*25*/
+"ticks :  TICKS.tickdesc \n", /*26*/
+"grid :  GRID.griddesc \n", /*27*/
+"", /*28*/
+"", /*29*/
+"stringlist :  stringlist.string \nplot :  stringlist.AT point \n", /*30*/
+"plot :  PLOT.stringlist AT point \nplot :  PLOT.expr optstring AT point \n", /*31*/
+"line :  LINE.FROM point TO point optdesc \nline :  LINE.optdesc FROM point TO point \noptdesc : .    (58)\n", /*32*/
+"circle :  CIRCLE.RADIUS expr AT point \ncircle :  CIRCLE.AT point RADIUS expr \ncircle :  CIRCLE.AT point \n", /*33*/
+"", /*34*/
+"", /*35*/
+"for :  FOR.name FROM expr TO expr BY optop expr DOSTR \nfor :  FOR.name FROM expr TO expr DOSTR \nfor :  FOR.name = expr TO expr BY optop expr DOSTR \nfor :  FOR.name = expr TO expr DOSTR \n", /*36*/
+"if :  IF.if_expr THEN ELSE \nif :  IF.if_expr THEN \n", /*37*/
+"copy :  COPY.copylist \n", /*38*/
+"", /*39*/
+"assign :  name.= expr \n", /*40*/
+"", /*41*/
+"", /*42*/
+"", /*43*/
+"", /*44*/
+"number :  -.NUMBER \n", /*45*/
+"number :  +.NUMBER \n", /*46*/
+"", /*47*/
+"", /*48*/
+"", /*49*/
+"string :  SPRINTF.( STRING ) sattrlist \nstring :  SPRINTF.( STRING , exprlist ) sattrlist \n", /*50*/
+"graphseq :  graphseq graph.statlist \nstat : .    (29)\n", /*51*/
+"statlist :  statlist stat.ST \n", /*52*/
+"", /*53*/
+"", /*54*/
+"", /*55*/
+"", /*56*/
+"numlist :  numlist comma.number \n", /*57*/
+"", /*58*/
+"", /*59*/
+"", /*60*/
+"", /*61*/
+"", /*62*/
+"", /*63*/
+"expr :  -.expr \n", /*64*/
+"expr :  +.expr \n", /*65*/
+"expr :  (.expr ) \n", /*66*/
+"expr :  LOG.( expr ) \n", /*67*/
+"expr :  EXP.( expr ) \n", /*68*/
+"expr :  SIN.( expr ) \n", /*69*/
+"expr :  COS.( expr ) \n", /*70*/
+"expr :  ATAN2.( expr , expr ) \n", /*71*/
+"expr :  SQRT.( expr ) \n", /*72*/
+"expr :  RAND.( ) \n", /*73*/
+"expr :  MAX.( expr , expr ) \n", /*74*/
+"expr :  MIN.( expr , expr ) \n", /*75*/
+"expr :  INT.( expr ) \n", /*76*/
+"expr :  NOT.expr \n", /*77*/
+"", /*78*/
+"", /*79*/
+"", /*80*/
+"", /*81*/
+"", /*82*/
+"", /*83*/
+"", /*84*/
+"", /*85*/
+"", /*86*/
+"", /*87*/
+"", /*88*/
+"labattr :  UP.expr \n", /*89*/
+"labattr :  DOWN.expr \n", /*90*/
+"", /*91*/
+"", /*92*/
+"", /*93*/
+"", /*94*/
+"", /*95*/
+"", /*96*/
+"", /*97*/
+"", /*98*/
+"", /*99*/
+"", /*100*/
+"", /*101*/
+"", /*102*/
+"", /*103*/
+"", /*104*/
+"label :  LABEL optside.stringlist lablist \n", /*105*/
+"", /*106*/
+"", /*107*/
+"", /*108*/
+"", /*109*/
+"", /*110*/
+"", /*111*/
+"stringlist :  stringlist.string \nplot :  PLOT stringlist.AT point \n", /*112*/
+"", /*113*/
+"", /*114*/
+"line :  LINE optdesc.FROM point TO point \n", /*115*/
+"", /*116*/
+"circle :  CIRCLE RADIUS.expr AT point \n", /*117*/
+"", /*118*/
+"draw :  drawtype optname.linedesc \ndraw :  drawtype optname.optdesc STRING \ndraw :  drawtype optname.STRING optdesc \noptdesc : .    (58)\n", /*119*/
+"next :  NEXT optname.AT point optdesc \n", /*120*/
+"for :  FOR name.FROM expr TO expr BY optop expr DOSTR \nfor :  FOR name.FROM expr TO expr DOSTR \nfor :  FOR name.= expr TO expr BY optop expr DOSTR \nfor :  FOR name.= expr TO expr DOSTR \n", /*121*/
+"if :  IF if_expr.THEN ELSE \nif :  IF if_expr.THEN \n", /*122*/
+"", /*123*/
+"if_expr :  STRING.EQ STRING \nif_expr :  STRING.NE STRING \n", /*124*/
+"", /*125*/
+"", /*126*/
+"", /*127*/
+"copyattr :  THRU.DEFNAME \n", /*128*/
+"copyattr :  UNTIL.STRING \n", /*129*/
+"assign :  name =.expr \n", /*130*/
+"", /*131*/
+"", /*132*/
+"", /*133*/
+"", /*134*/
+"", /*135*/
+"", /*136*/
+"string :  SPRINTF (.STRING ) sattrlist \nstring :  SPRINTF (.STRING , exprlist ) sattrlist \n", /*137*/
+"", /*138*/
+"", /*139*/
+"", /*140*/
+"frameitem :  HEIGHT.expr \n", /*141*/
+"frameitem :  WIDTH.expr \n", /*142*/
+"frameitem :  side.linedesc \n", /*143*/
+"", /*144*/
+"", /*145*/
+"expr :  expr +.expr \n", /*146*/
+"expr :  expr -.expr \n", /*147*/
+"expr :  expr *.expr \n", /*148*/
+"expr :  expr /.expr \n", /*149*/
+"expr :  expr GT.expr \n", /*150*/
+"expr :  expr LT.expr \n", /*151*/
+"expr :  expr LE.expr \n", /*152*/
+"expr :  expr GE.expr \n", /*153*/
+"expr :  expr EQ.expr \n", /*154*/
+"expr :  expr NE.expr \n", /*155*/
+"expr :  expr AND.expr \n", /*156*/
+"expr :  expr OR.expr \n", /*157*/
+"", /*158*/
+"", /*159*/
+"expr :  expr.+ expr \nexpr :  expr.- expr \nexpr :  expr.* expr \nexpr :  expr./ expr \nexpr :  ( expr.) \nexpr :  expr.GT expr \nexpr :  expr.LT expr \nexpr :  expr.LE expr \nexpr :  expr.GE expr \nexpr :  expr.EQ expr \nexpr :  expr.NE expr \nexpr :  expr.AND expr \nexpr :  expr.OR expr \n", /*160*/
+"expr :  LOG (.expr ) \n", /*161*/
+"expr :  EXP (.expr ) \n", /*162*/
+"expr :  SIN (.expr ) \n", /*163*/
+"expr :  COS (.expr ) \n", /*164*/
+"expr :  ATAN2 (.expr , expr ) \n", /*165*/
+"expr :  SQRT (.expr ) \n", /*166*/
+"expr :  RAND (.) \n", /*167*/
+"expr :  MAX (.expr , expr ) \n", /*168*/
+"expr :  MIN (.expr , expr ) \n", /*169*/
+"expr :  INT (.expr ) \n", /*170*/
+"", /*171*/
+"", /*172*/
+"", /*173*/
+"", /*174*/
+"", /*175*/
+"tickattr :  AT optname.ticklist \n", /*176*/
+"", /*177*/
+"iterator :  FROM optname.expr TO optname expr BY optop expr optstring \niterator :  FROM optname.expr TO optname expr optstring \n", /*178*/
+"", /*179*/
+"", /*180*/
+"", /*181*/
+"gridattr :  AT optname.ticklist \n", /*182*/
+"", /*183*/
+"", /*184*/
+"", /*185*/
+"", /*186*/
+"", /*187*/
+"", /*188*/
+"", /*189*/
+"", /*190*/
+"coordlog :  LOG.X \ncoordlog :  LOG.Y \ncoordlog :  LOG.X LOG Y \ncoordlog :  LOG.Y LOG X \ncoordlog :  LOG.LOG \n", /*191*/
+"", /*192*/
+"point :  optname.expr comma expr \npoint :  optname.( expr comma expr ) \n", /*193*/
+"", /*194*/
+"plot :  PLOT expr optstring.AT point \n", /*195*/
+"", /*196*/
+"line :  LINE FROM point.TO point optdesc \n", /*197*/
+"", /*198*/
+"circle :  CIRCLE RADIUS expr.AT point \nexpr :  expr.+ expr \nexpr :  expr.- expr \nexpr :  expr.* expr \nexpr :  expr./ expr \nexpr :  expr.GT expr \nexpr :  expr.LT expr \nexpr :  expr.LE expr \nexpr :  expr.GE expr \nexpr :  expr.EQ expr \nexpr :  expr.NE expr \nexpr :  expr.AND expr \nexpr :  expr.OR expr \n", /*199*/
+"", /*200*/
+"", /*201*/
+"draw :  drawtype optname optdesc.STRING \n", /*202*/
+"", /*203*/
+"", /*204*/
+"for :  FOR name FROM.expr TO expr BY optop expr DOSTR \nfor :  FOR name FROM.expr TO expr DOSTR \n", /*205*/
+"for :  FOR name =.expr TO expr BY optop expr DOSTR \nfor :  FOR name =.expr TO expr DOSTR \n", /*206*/
+"", /*207*/
+"if_expr :  STRING EQ.STRING \n", /*208*/
+"if_expr :  STRING NE.STRING \n", /*209*/
+"", /*210*/
+"", /*211*/
+"", /*212*/
+"", /*213*/
+"", /*214*/
+"stringattr :  SIZE optop.expr \n", /*215*/
+"", /*216*/
+"", /*217*/
+"", /*218*/
+"", /*219*/
+"string :  SPRINTF ( STRING.) sattrlist \nstring :  SPRINTF ( STRING., exprlist ) sattrlist \n", /*220*/
+"", /*221*/
+"", /*222*/
+"", /*223*/
+"", /*224*/
+"", /*225*/
+"", /*226*/
+"", /*227*/
+"", /*228*/
+"", /*229*/
+"", /*230*/
+"", /*231*/
+"", /*232*/
+"", /*233*/
+"", /*234*/
+"", /*235*/
+"", /*236*/
+"expr :  expr.+ expr \nexpr :  expr.- expr \nexpr :  expr.* expr \nexpr :  expr./ expr \nexpr :  LOG ( expr.) \nexpr :  expr.GT expr \nexpr :  expr.LT expr \nexpr :  expr.LE expr \nexpr :  expr.GE expr \nexpr :  expr.EQ expr \nexpr :  expr.NE expr \nexpr :  expr.AND expr \nexpr :  expr.OR expr \n", /*237*/
+"expr :  expr.+ expr \nexpr :  expr.- expr \nexpr :  expr.* expr \nexpr :  expr./ expr \nexpr :  EXP ( expr.) \nexpr :  expr.GT expr \nexpr :  expr.LT expr \nexpr :  expr.LE expr \nexpr :  expr.GE expr \nexpr :  expr.EQ expr \nexpr :  expr.NE expr \nexpr :  expr.AND expr \nexpr :  expr.OR expr \n", /*238*/
+"expr :  expr.+ expr \nexpr :  expr.- expr \nexpr :  expr.* expr \nexpr :  expr./ expr \nexpr :  SIN ( expr.) \nexpr :  expr.GT expr \nexpr :  expr.LT expr \nexpr :  expr.LE expr \nexpr :  expr.GE expr \nexpr :  expr.EQ expr \nexpr :  expr.NE expr \nexpr :  expr.AND expr \nexpr :  expr.OR expr \n", /*239*/
+"expr :  expr.+ expr \nexpr :  expr.- expr \nexpr :  expr.* expr \nexpr :  expr./ expr \nexpr :  COS ( expr.) \nexpr :  expr.GT expr \nexpr :  expr.LT expr \nexpr :  expr.LE expr \nexpr :  expr.GE expr \nexpr :  expr.EQ expr \nexpr :  expr.NE expr \nexpr :  expr.AND expr \nexpr :  expr.OR expr \n", /*240*/
+"expr :  expr.+ expr \nexpr :  expr.- expr \nexpr :  expr.* expr \nexpr :  expr./ expr \nexpr :  ATAN2 ( expr., expr ) \nexpr :  expr.GT expr \nexpr :  expr.LT expr \nexpr :  expr.LE expr \nexpr :  expr.GE expr \nexpr :  expr.EQ expr \nexpr :  expr.NE expr \nexpr :  expr.AND expr \nexpr :  expr.OR expr \n", /*241*/
+"expr :  expr.+ expr \nexpr :  expr.- expr \nexpr :  expr.* expr \nexpr :  expr./ expr \nexpr :  SQRT ( expr.) \nexpr :  expr.GT expr \nexpr :  expr.LT expr \nexpr :  expr.LE expr \nexpr :  expr.GE expr \nexpr :  expr.EQ expr \nexpr :  expr.NE expr \nexpr :  expr.AND expr \nexpr :  expr.OR expr \n", /*242*/
+"", /*243*/
+"expr :  expr.+ expr \nexpr :  expr.- expr \nexpr :  expr.* expr \nexpr :  expr./ expr \nexpr :  MAX ( expr., expr ) \nexpr :  expr.GT expr \nexpr :  expr.LT expr \nexpr :  expr.LE expr \nexpr :  expr.GE expr \nexpr :  expr.EQ expr \nexpr :  expr.NE expr \nexpr :  expr.AND expr \nexpr :  expr.OR expr \n", /*244*/
+"expr :  expr.+ expr \nexpr :  expr.- expr \nexpr :  expr.* expr \nexpr :  expr./ expr \nexpr :  MIN ( expr., expr ) \nexpr :  expr.GT expr \nexpr :  expr.LT expr \nexpr :  expr.LE expr \nexpr :  expr.GE expr \nexpr :  expr.EQ expr \nexpr :  expr.NE expr \nexpr :  expr.AND expr \nexpr :  expr.OR expr \n", /*245*/
+"expr :  expr.+ expr \nexpr :  expr.- expr \nexpr :  expr.* expr \nexpr :  expr./ expr \nexpr :  INT ( expr.) \nexpr :  expr.GT expr \nexpr :  expr.LT expr \nexpr :  expr.LE expr \nexpr :  expr.GE expr \nexpr :  expr.EQ expr \nexpr :  expr.NE expr \nexpr :  expr.AND expr \nexpr :  expr.OR expr \n", /*246*/
+"", /*247*/
+"", /*248*/
+"", /*249*/
+"iterator :  FROM optname expr.TO optname expr BY optop expr optstring \niterator :  FROM optname expr.TO optname expr optstring \nexpr :  expr.+ expr \nexpr :  expr.- expr \nexpr :  expr.* expr \nexpr :  expr./ expr \nexpr :  expr.GT expr \nexpr :  expr.LT expr \nexpr :  expr.LE expr \nexpr :  expr.GE expr \nexpr :  expr.EQ expr \nexpr :  expr.NE expr \nexpr :  expr.AND expr \nexpr :  expr.OR expr \n", /*250*/
+"", /*251*/
+"", /*252*/
+"", /*253*/
+"labattr :  SIDE.expr \n", /*254*/
+"", /*255*/
+"", /*256*/
+"coorditem :  X optname.expr TO expr \npoint :  optname.expr comma expr \npoint :  optname.( expr comma expr ) \n", /*257*/
+"", /*258*/
+"", /*259*/
+"coorditem :  Y optname.expr TO expr \npoint :  optname.expr comma expr \npoint :  optname.( expr comma expr ) \n", /*260*/
+"", /*261*/
+"", /*262*/
+"", /*263*/
+"", /*264*/
+"point :  optname expr.comma expr \nexpr :  expr.+ expr \nexpr :  expr.- expr \nexpr :  expr.* expr \nexpr :  expr./ expr \nexpr :  expr.GT expr \nexpr :  expr.LT expr \nexpr :  expr.LE expr \nexpr :  expr.GE expr \nexpr :  expr.EQ expr \nexpr :  expr.NE expr \nexpr :  expr.AND expr \nexpr :  expr.OR expr \n", /*265*/
+"point :  optname (.expr comma expr ) \nexpr :  (.expr ) \n", /*266*/
+"", /*267*/
+"", /*268*/
+"", /*269*/
+"line :  LINE optdesc FROM point.TO point \n", /*270*/
+"", /*271*/
+"circle :  CIRCLE AT point RADIUS.expr \n", /*272*/
+"", /*273*/
+"", /*274*/
+"", /*275*/
+"for :  FOR name FROM expr.TO expr BY optop expr DOSTR \nfor :  FOR name FROM expr.TO expr DOSTR \nexpr :  expr.+ expr \nexpr :  expr.- expr \nexpr :  expr.* expr \nexpr :  expr./ expr \nexpr :  expr.GT expr \nexpr :  expr.LT expr \nexpr :  expr.LE expr \nexpr :  expr.GE expr \nexpr :  expr.EQ expr \nexpr :  expr.NE expr \nexpr :  expr.AND expr \nexpr :  expr.OR expr \n", /*276*/
+"for :  FOR name = expr.TO expr BY optop expr DOSTR \nfor :  FOR name = expr.TO expr DOSTR \nexpr :  expr.+ expr \nexpr :  expr.- expr \nexpr :  expr.* expr \nexpr :  expr./ expr \nexpr :  expr.GT expr \nexpr :  expr.LT expr \nexpr :  expr.LE expr \nexpr :  expr.GE expr \nexpr :  expr.EQ expr \nexpr :  expr.NE expr \nexpr :  expr.AND expr \nexpr :  expr.OR expr \n", /*277*/
+"", /*278*/
+"", /*279*/
+"", /*280*/
+"", /*281*/
+"", /*282*/
+"string :  SPRINTF ( STRING ,.exprlist ) sattrlist \n", /*283*/
+"", /*284*/
+"", /*285*/
+"", /*286*/
+"", /*287*/
+"expr :  ATAN2 ( expr ,.expr ) \n", /*288*/
+"", /*289*/
+"expr :  MAX ( expr ,.expr ) \n", /*290*/
+"expr :  MIN ( expr ,.expr ) \n", /*291*/
+"", /*292*/
+"ticklist :  ticklist comma.tickpoint \n", /*293*/
+"", /*294*/
+"", /*295*/
+"", /*296*/
+"coorditem :  X optname expr.TO expr \npoint :  optname expr.comma expr \nexpr :  expr.+ expr \nexpr :  expr.- expr \nexpr :  expr.* expr \nexpr :  expr./ expr \nexpr :  expr.GT expr \nexpr :  expr.LT expr \nexpr :  expr.LE expr \nexpr :  expr.GE expr \nexpr :  expr.EQ expr \nexpr :  expr.NE expr \nexpr :  expr.AND expr \nexpr :  expr.OR expr \n", /*297*/
+"coorditem :  X FROM optname.expr TO expr \n", /*298*/
+"coorditem :  Y optname expr.TO expr \npoint :  optname expr.comma expr \nexpr :  expr.+ expr \nexpr :  expr.- expr \nexpr :  expr.* expr \nexpr :  expr./ expr \nexpr :  expr.GT expr \nexpr :  expr.LT expr \nexpr :  expr.LE expr \nexpr :  expr.GE expr \nexpr :  expr.EQ expr \nexpr :  expr.NE expr \nexpr :  expr.AND expr \nexpr :  expr.OR expr \n", /*299*/
+"coorditem :  Y FROM optname.expr TO expr \n", /*300*/
+"coordlog :  LOG X LOG.Y \n", /*301*/
+"coordlog :  LOG Y LOG.X \n", /*302*/
+"point :  optname expr comma.expr \n", /*303*/
+"point :  optname ( expr.comma expr ) \nexpr :  expr.+ expr \nexpr :  expr.- expr \nexpr :  expr.* expr \nexpr :  expr./ expr \nexpr :  ( expr.) \nexpr :  expr.GT expr \nexpr :  expr.LT expr \nexpr :  expr.LE expr \nexpr :  expr.GE expr \nexpr :  expr.EQ expr \nexpr :  expr.NE expr \nexpr :  expr.AND expr \nexpr :  expr.OR expr \n", /*304*/
+"", /*305*/
+"", /*306*/
+"", /*307*/
+"", /*308*/
+"", /*309*/
+"", /*310*/
+"for :  FOR name FROM expr TO.expr BY optop expr DOSTR \nfor :  FOR name FROM expr TO.expr DOSTR \n", /*311*/
+"for :  FOR name = expr TO.expr BY optop expr DOSTR \nfor :  FOR name = expr TO.expr DOSTR \n", /*312*/
+"", /*313*/
+"string :  SPRINTF ( STRING , exprlist.) sattrlist \nexprlist :  exprlist., expr \n", /*314*/
+"", /*315*/
+"expr :  expr.+ expr \nexpr :  expr.- expr \nexpr :  expr.* expr \nexpr :  expr./ expr \nexpr :  ATAN2 ( expr , expr.) \nexpr :  expr.GT expr \nexpr :  expr.LT expr \nexpr :  expr.LE expr \nexpr :  expr.GE expr \nexpr :  expr.EQ expr \nexpr :  expr.NE expr \nexpr :  expr.AND expr \nexpr :  expr.OR expr \n", /*316*/
+"expr :  expr.+ expr \nexpr :  expr.- expr \nexpr :  expr.* expr \nexpr :  expr./ expr \nexpr :  MAX ( expr , expr.) \nexpr :  expr.GT expr \nexpr :  expr.LT expr \nexpr :  expr.LE expr \nexpr :  expr.GE expr \nexpr :  expr.EQ expr \nexpr :  expr.NE expr \nexpr :  expr.AND expr \nexpr :  expr.OR expr \n", /*317*/
+"expr :  expr.+ expr \nexpr :  expr.- expr \nexpr :  expr.* expr \nexpr :  expr./ expr \nexpr :  MIN ( expr , expr.) \nexpr :  expr.GT expr \nexpr :  expr.LT expr \nexpr :  expr.LE expr \nexpr :  expr.GE expr \nexpr :  expr.EQ expr \nexpr :  expr.NE expr \nexpr :  expr.AND expr \nexpr :  expr.OR expr \n", /*318*/
+"", /*319*/
+"iterator :  FROM optname expr TO optname.expr BY optop expr optstring \niterator :  FROM optname expr TO optname.expr optstring \n", /*320*/
+"coorditem :  X optname expr TO.expr \n", /*321*/
+"coorditem :  X FROM optname expr.TO expr \nexpr :  expr.+ expr \nexpr :  expr.- expr \nexpr :  expr.* expr \nexpr :  expr./ expr \nexpr :  expr.GT expr \nexpr :  expr.LT expr \nexpr :  expr.LE expr \nexpr :  expr.GE expr \nexpr :  expr.EQ expr \nexpr :  expr.NE expr \nexpr :  expr.AND expr \nexpr :  expr.OR expr \n", /*322*/
+"coorditem :  Y optname expr TO.expr \n", /*323*/
+"coorditem :  Y FROM optname expr.TO expr \nexpr :  expr.+ expr \nexpr :  expr.- expr \nexpr :  expr.* expr \nexpr :  expr./ expr \nexpr :  expr.GT expr \nexpr :  expr.LT expr \nexpr :  expr.LE expr \nexpr :  expr.GE expr \nexpr :  expr.EQ expr \nexpr :  expr.NE expr \nexpr :  expr.AND expr \nexpr :  expr.OR expr \n", /*324*/
+"", /*325*/
+"", /*326*/
+"", /*327*/
+"point :  optname ( expr comma.expr ) \n", /*328*/
+"", /*329*/
+"", /*330*/
+"for :  FOR name FROM expr TO expr.BY optop expr DOSTR \nfor :  FOR name FROM expr TO expr.DOSTR \nexpr :  expr.+ expr \nexpr :  expr.- expr \nexpr :  expr.* expr \nexpr :  expr./ expr \nexpr :  expr.GT expr \nexpr :  expr.LT expr \nexpr :  expr.LE expr \nexpr :  expr.GE expr \nexpr :  expr.EQ expr \nexpr :  expr.NE expr \nexpr :  expr.AND expr \nexpr :  expr.OR expr \n", /*331*/
+"for :  FOR name = expr TO expr.BY optop expr DOSTR \nfor :  FOR name = expr TO expr.DOSTR \nexpr :  expr.+ expr \nexpr :  expr.- expr \nexpr :  expr.* expr \nexpr :  expr./ expr \nexpr :  expr.GT expr \nexpr :  expr.LT expr \nexpr :  expr.LE expr \nexpr :  expr.GE expr \nexpr :  expr.EQ expr \nexpr :  expr.NE expr \nexpr :  expr.AND expr \nexpr :  expr.OR expr \n", /*332*/
+"", /*333*/
+"exprlist :  exprlist ,.expr \n", /*334*/
+"", /*335*/
+"", /*336*/
+"", /*337*/
+"", /*338*/
+"", /*339*/
+"coorditem :  X FROM optname expr TO.expr \n", /*340*/
+"", /*341*/
+"coorditem :  Y FROM optname expr TO.expr \n", /*342*/
+"point :  optname ( expr comma expr.) \nexpr :  expr.+ expr \nexpr :  expr.- expr \nexpr :  expr.* expr \nexpr :  expr./ expr \nexpr :  expr.GT expr \nexpr :  expr.LT expr \nexpr :  expr.LE expr \nexpr :  expr.GE expr \nexpr :  expr.EQ expr \nexpr :  expr.NE expr \nexpr :  expr.AND expr \nexpr :  expr.OR expr \n", /*343*/
+"", /*344*/
+"", /*345*/
+"", /*346*/
+"", /*347*/
+"", /*348*/
+"", /*349*/
+"", /*350*/
+"", /*351*/
+"", /*352*/
+"", /*353*/
+"", /*354*/
+"for :  FOR name FROM expr TO expr BY optop.expr DOSTR \n", /*355*/
+"for :  FOR name = expr TO expr BY optop.expr DOSTR \n", /*356*/
+"iterator :  FROM optname expr TO optname expr BY optop.expr optstring \n", /*357*/
+"for :  FOR name FROM expr TO expr BY optop expr.DOSTR \nexpr :  expr.+ expr \nexpr :  expr.- expr \nexpr :  expr.* expr \nexpr :  expr./ expr \nexpr :  expr.GT expr \nexpr :  expr.LT expr \nexpr :  expr.LE expr \nexpr :  expr.GE expr \nexpr :  expr.EQ expr \nexpr :  expr.NE expr \nexpr :  expr.AND expr \nexpr :  expr.OR expr \n", /*358*/
+"for :  FOR name = expr TO expr BY optop expr.DOSTR \nexpr :  expr.+ expr \nexpr :  expr.- expr \nexpr :  expr.* expr \nexpr :  expr./ expr \nexpr :  expr.GT expr \nexpr :  expr.LT expr \nexpr :  expr.LE expr \nexpr :  expr.GE expr \nexpr :  expr.EQ expr \nexpr :  expr.NE expr \nexpr :  expr.AND expr \nexpr :  expr.OR expr \n", /*359*/
+"", /*360*/
+"", /*361*/
+"", /*362*/
+"", /*363*/
+};
+#endif
