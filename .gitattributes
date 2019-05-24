@@ -1,0 +1,6 @@
+# Improve classification accuracy/appearance on GitHub
+*.l                 linguist-language=Lex
+/grap/grap.202      linguist-language=Roff
+/grap/grap.defines  linguist-language=Roff
+/grap/y.debug       linguist-language=C
+/troff/README       linguist-language=Markdown
