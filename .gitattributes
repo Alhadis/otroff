@@ -1,0 +1,8 @@
+# Fix language classification on GitHub
+*.h                  linguist-language=C
+*.y                  linguist-language=Yacc
+/refer/test          linguist-language=Roff
+/troff/[nt]make      linguist-language=Makefile
+/troff/textscript    linguist-language=sed
+/troff/font/linkrc   linguist-language=Shell
+/troff/term/code.300 linguist-language=C
